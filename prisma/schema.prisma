@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Supplier {
+  id           Int            @id @default(autoincrement())
+  kode         String         @unique
+  name         String
+  no_hp        String         @unique
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @updatedAt
+  barang_masuk Barang_masuk[]
+
+  @@map("suppliers")
+}
+
+model Handphone {
+  id           Int            @id @default(autoincrement())
+  name         String
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @updatedAt
+  barang_masuk Barang_masuk[]
+
+  @@map("handphones")
+}
+
+model Barang_masuk {
+  id              Int       @id @default(autoincrement())
+  supplier_id     Int
+  imei            String    @unique
+  handphone_id    Int
+  harga_pembelian String
+  catatan_awal    String
+  catatan_selesai String?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  supplier        Supplier  @relation(fields: [supplier_id], references: [id], onDelete: Cascade)
+  handphone       Handphone @relation(fields: [handphone_id], references: [id], onDelete: Cascade)
+
+  @@map("barang_masuks")
+}
