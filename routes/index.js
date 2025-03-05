@@ -6,12 +6,13 @@ const moment = require('moment-timezone'); // Import moment-timezone
 const router = express.Router();
 
 // Import validators and middleware
-const { validateLogin, validateSupplier } = require('../utils/validators');
+const { validateLogin, validateSupplier, validateBarangMasuk } = require('../utils/validators');
 const { handleValidationErrors, verifyToken } = require('../middlewares');
 
 // Import controllers
 const loginController = require('../controllers/LoginController');
 const supplierController = require('../controllers/SupplierController');
+const barangMasukController = require('../controllers/BarangMasukController');
 
 // Define routes
 const routes = [
@@ -20,6 +21,10 @@ const routes = [
 
     // Supplier route
     { method: 'post', path: '/suppliers', middlewares: [verifyToken, validateSupplier, handleValidationErrors], handler: supplierController.createSupplier },
+    { method: 'get', path: '/supplier-all', middlewares: [verifyToken], handler: supplierController.allSupplier },
+
+    // Barang masuk route
+    { method: 'post', path: '/barang-masuk', middlewares: [verifyToken, validateBarangMasuk, handleValidationErrors], handler: barangMasukController.createBarangMasuk },
 ];
 
 // Helper function to create routes

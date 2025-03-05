@@ -47,17 +47,20 @@ model Handphone {
 }
 
 model Barang_masuk {
-  id              Int       @id @default(autoincrement())
-  supplier_id     Int
-  imei            String    @unique
-  handphone_id    Int
-  harga_pembelian String
-  catatan_awal    String
-  catatan_selesai String?
-  created_at      DateTime  @default(now())
-  updated_at      DateTime  @updatedAt
-  supplier        Supplier  @relation(fields: [supplier_id], references: [id], onDelete: Cascade)
-  handphone       Handphone @relation(fields: [handphone_id], references: [id], onDelete: Cascade)
+  id                Int       @id @default(autoincrement())
+  supplier_id       Int
+  imei              String    @unique
+  handphone_id      Int
+  harga_pembelian   Float
+  sales             String? // Menambahkan field sales
+  tanggal_pembelian DateTime? // Menambahkan field tanggal_pembelian
+  jenis_pembelian   String? // Menambahkan field jenis_pembelian
+  catatan_awal      String
+  catatan_selesai   String?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  supplier          Supplier  @relation(fields: [supplier_id], references: [id], onDelete: Cascade)
+  handphone         Handphone @relation(fields: [handphone_id], references: [id], onDelete: Cascade)
 
   @@map("barang_masuks")
 }
