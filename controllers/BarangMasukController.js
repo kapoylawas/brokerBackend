@@ -4,7 +4,98 @@ const express = require("express");
 // Import prisma client untuk berinteraksi dengan database
 const prisma = require("../prisma/client");
 
-const createBarangMasuk = async(req, res) => {
+const findBarangMasuk = async (req, res) => {
+    try {
+        // Mengambil nilai halaman dan limit dari parameter query, dengan nilai default
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        // Ambil kata kunci pencarian dari parameter query
+        const search = req.query.search || '';
+
+        // mengambil semua barang masuk
+        const barangMasuk = await prisma.barang_masuk.findMany({
+            where: {
+                imei: {
+                    contains: search, //mencari no imei
+                }
+            },
+            select: {
+                id: true,
+                imei: true,
+                harga_pembelian: true,
+                sales: true,
+                tanggal_pembelian: true,
+                jenis_pembelian: true,
+                catatan_awal: true,
+                catatan_selesai: true,
+                created_at: true,
+                updated_at: true,
+                supplier: {
+                    select: {
+                        kode: true,
+                        name: true,
+                        no_hp: true,
+                    }
+                },
+                handphone: {
+                    select: {
+                        name: true
+                    }
+                }
+            },
+            orderBy: {
+                id: "desc",
+            },
+            skip: skip,
+            take: limit,
+        });
+
+        // Mengambil jumlah total produk untuk paginasi
+        const totalBarangMasuk = await prisma.barang_masuk.count({
+            where: {
+                imei: {
+                    contains: search, // Menghitung jumlah total produk yang sesuai dengan kata kunci pencarian
+                },
+            },
+        });
+
+        // Menghitung total halaman
+        const totalPages = Math.ceil(totalBarangMasuk / limit);
+
+        // Mengirim respons
+        res.status(200).send({
+            //meta untuk respons JSON
+            meta: {
+                success: true,
+                message: "Berhasil mengambil semua produk barang masuk",
+            },
+            //data produk barang masuk
+            data: barangMasuk,
+            //paginasi
+            pagination: {
+                currentPage: page,
+                totalPages: totalPages,
+                perPage: limit,
+                total: totalBarangMasuk,
+            },
+        });
+    } catch (error) {
+        // Mengirim respons jika terjadi kesalahan
+        res.status(500).send({
+            //meta untuk respons JSON
+            meta: {
+                success: false,
+                message: "Kesalahan internal server",
+            },
+            //data kesalahan
+            errors: error,
+        });
+    }
+}
+
+const createBarangMasuk = async (req, res) => {
     try {
         const barangMasuk = await prisma.barang_masuk.create({
             data: {
@@ -46,5 +137,6 @@ const createBarangMasuk = async(req, res) => {
 }
 
 module.exports = {
-    createBarangMasuk
+    createBarangMasuk,
+    findBarangMasuk
 }
