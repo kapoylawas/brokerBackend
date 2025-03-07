@@ -13,6 +13,7 @@ const { handleValidationErrors, verifyToken } = require('../middlewares');
 const loginController = require('../controllers/LoginController');
 const supplierController = require('../controllers/SupplierController');
 const barangMasukController = require('../controllers/BarangMasukController');
+const handPhoneController = require('../controllers/HandPhoneController');
 
 // Define routes
 const routes = [
@@ -22,6 +23,9 @@ const routes = [
     // Supplier route
     { method: 'post', path: '/suppliers', middlewares: [verifyToken, validateSupplier, handleValidationErrors], handler: supplierController.createSupplier },
     { method: 'get', path: '/supplier-all', middlewares: [verifyToken], handler: supplierController.allSupplier },
+
+    // HandPhone route
+    { method: 'get', path: '/hand-phone', middlewares: [verifyToken], handler: handPhoneController.allHandPhone },
 
     // Barang masuk route
     { method: 'post', path: '/barang-masuk', middlewares: [verifyToken, validateBarangMasuk, handleValidationErrors], handler: barangMasukController.createBarangMasuk },
