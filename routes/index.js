@@ -18,7 +18,7 @@ const handPhoneController = require('../controllers/HandPhoneController');
 // Define routes
 const routes = [
     // Login route
-    { method: 'post', path: '/login', middlewares: [validateLogin, handleValidationErrors], handler: loginController.login },
+    { method: 'post', path: '/login', middlewares: [validateLogin,  handleValidationErrors], handler: loginController.login },
 
     // Supplier route
     { method: 'post', path: '/suppliers', middlewares: [verifyToken, validateSupplier, handleValidationErrors], handler: supplierController.createSupplier },
