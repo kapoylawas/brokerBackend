@@ -6,7 +6,7 @@ const moment = require('moment-timezone'); // Import moment-timezone
 const router = express.Router();
 
 // Import validators and middleware
-const { validateLogin, validateSupplier, validateBarangMasuk } = require('../utils/validators');
+const { validateLogin, validateSupplier, validateBarangMasuk, validateHandphone } = require('../utils/validators');
 const { handleValidationErrors, verifyToken } = require('../middlewares');
 
 // Import controllers
@@ -26,6 +26,7 @@ const routes = [
 
     // HandPhone route
     { method: 'get', path: '/hand-phone', middlewares: [verifyToken], handler: handPhoneController.allHandPhone },
+    { method: 'post', path: '/hand-phone', middlewares: [verifyToken, validateHandphone, handleValidationErrors], handler: handPhoneController.createPhone },
 
     // Barang masuk route
     { method: 'post', path: '/barang-masuk', middlewares: [verifyToken, validateBarangMasuk, handleValidationErrors], handler: barangMasukController.createBarangMasuk },
