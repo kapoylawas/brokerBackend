@@ -31,6 +31,7 @@ const routes = [
     // Barang masuk route
     { method: 'post', path: '/barang-masuk', middlewares: [verifyToken, validateBarangMasuk, handleValidationErrors], handler: barangMasukController.createBarangMasuk },
     { method: 'get', path: '/barang-masuk', middlewares: [verifyToken], handler: barangMasukController.findBarangMasuk },
+    { method: 'get', path: '/barang-masuk/:id', middlewares: [verifyToken], handler: barangMasukController.findBarangMasukById },
 ];
 
 // Helper function to create routes

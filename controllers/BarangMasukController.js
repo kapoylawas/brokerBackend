@@ -136,7 +136,78 @@ const createBarangMasuk = async (req, res) => {
     }
 }
 
+const findBarangMasukById = async(req, res) => {
+    // mendapatkan id parameter
+    const { id } = req.params
+
+    try {
+        // mengambil barang masuk bedasarkan ID
+        const barangMasuk = await prisma.barang_masuk.findUnique({
+            where: {
+                id: Number(id),
+            },
+            select: {
+                id: true,
+                supplier: {
+                    select: {
+                        kode: true,
+                        name: true,
+                        no_hp: true,
+                    }
+                },
+                imei:true,
+                handphone: {
+                    select: {
+                        name: true
+                    }
+                },
+                harga_pembelian: true,
+                sales: true,
+                tanggal_pembelian: true,
+                jenis_pembelian: true,
+                catatan_awal: true,
+                catatan_selesai: true,
+                created_at: true,
+                updated_at: true,
+            }
+        })
+        
+
+        // // jika barang masuk tidak ada
+        if (!barangMasuk) {
+            return res.status(404).send({
+                // meta response json
+                meta: {
+                    success: false,
+                    message: `barang masuk dengan ID: ${id} tidak ditemukan`
+                }
+            })
+        }
+
+        res.status(200).send({
+            // meta untuk response json
+            meta: {
+                success: true,
+                message: `Berhasil mengambil data barang masuk dengan ID: ${id}`
+            },
+            // data
+            data: barangMasuk
+        })
+    } catch (error) {
+        res.status(500).send({
+            // meta untuk response json
+            meta: {
+                success: false,
+                message: 'Terjadi kesalahan server'
+            },
+            // data
+            errors: error
+        })
+    }
+}
+
 module.exports = {
     createBarangMasuk,
-    findBarangMasuk
+    findBarangMasuk,
+    findBarangMasukById
 }
