@@ -207,8 +207,61 @@ const findBarangMasukById = async (req, res) => {
   }
 };
 
+const updateBarangMasuk = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const dataBarangMasuk = {
+      supplier_id: parseInt(req.body.supplier_id),
+      imei: req.body.imei,
+      handphone_id: parseInt(req.body.handphone_id),
+      harga_pembelian: parseInt(req.body.harga_pembelian),
+      sales: req.body.sales,
+      tanggal_pembelian: new Date(req.body.tanggal_pembelian),
+      jenis_pembelian: req.body.jenis_pembelian,
+      catatan_selesai: req.body.catatan_selesai,
+      updated_at: new Date(),
+    };
+
+    // Mengupdate barang masuk
+    const barangMasuk = await prisma.barang_masuk.update({
+      where: {
+        id: Number(id),
+      },
+      data: dataBarangMasuk,
+      include: {
+        supplier: true,
+        handphone: true,
+      },
+    });
+
+    // Mengirim respons
+    res.status(200).send({
+      //meta untuk respons JSON
+      meta: {
+        success: true,
+        message: "Barang masuk berhasil diperbarui",
+      },
+      //data barang masuk
+      data: barangMasuk,
+    });
+  } catch (error) {
+    // Mengirim respons jika terjadi kesalahan
+    res.status(500).send({
+      //meta untuk respons JSON
+      meta: {
+        success: false,
+        message: "Kesalahan internal server",
+      },
+      //data kesalahan
+      errors: error,
+    });
+  }
+};
+
 module.exports = {
   createBarangMasuk,
   findBarangMasuk,
   findBarangMasukById,
+  updateBarangMasuk
 };
