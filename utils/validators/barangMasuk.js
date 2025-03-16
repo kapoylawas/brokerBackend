@@ -21,6 +21,7 @@ const validateBarangMasuk = [
         return true;
     }),
     body("handphone_id").notEmpty().withMessage("Handphone tidak boleh kosong"),
+    body("name_handphone").notEmpty().withMessage("Nama handphone tidak boleh kosong"),
     body("harga_pembelian").notEmpty().withMessage("Harga pembelian tidak boleh kosong"),
     body("sales").notEmpty().withMessage("Sales tidak boleh kosong"),
     body("tanggal_pembelian").notEmpty().withMessage("Tanggal pembelian tidak boleh kosong"),

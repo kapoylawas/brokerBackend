@@ -102,9 +102,10 @@ const createBarangMasuk = async (req, res) => {
         supplier_id: parseInt(req.body.supplier_id),
         imei: req.body.imei,
         handphone_id: parseInt(req.body.handphone_id),
+        name_handphone: req.body.name_handphone,
         harga_pembelian: parseInt(req.body.harga_pembelian),
         sales: req.body.sales,
-        tanggal_pembelian: new Date(req.body.tanggal_pembelian),
+        tanggal_pembelian: req.body.tanggal_pembelian ? new Date(req.body.tanggal_pembelian) : null,
         jenis_pembelian: req.body.jenis_pembelian,
         catatan_awal: req.body.catatan_awal,
       },
@@ -112,7 +113,7 @@ const createBarangMasuk = async (req, res) => {
         supplier: true,
         handphone: true,
       },
-    });
+    });    
 
     // mengirimkan respons
     res.status(201).send({
@@ -164,6 +165,7 @@ const findBarangMasukById = async (req, res) => {
           },
         },
         harga_pembelian: true,
+        name_handphone: true,
         sales: true,
         tanggal_pembelian: true,
         jenis_pembelian: true,
@@ -215,6 +217,7 @@ const updateBarangMasuk = async (req, res) => {
       supplier_id: parseInt(req.body.supplier_id),
       imei: req.body.imei,
       handphone_id: parseInt(req.body.handphone_id),
+      name_handphone: req.body.name_handphone,
       harga_pembelian: parseInt(req.body.harga_pembelian),
       sales: req.body.sales,
       tanggal_pembelian: new Date(req.body.tanggal_pembelian),

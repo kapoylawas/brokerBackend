@@ -46,11 +46,13 @@ model Handphone {
   @@map("handphones")
 }
 
+
 model Barang_masuk {
   id                Int       @id @default(autoincrement())
   supplier_id       Int
   imei              String    @unique
   handphone_id      Int
+  name_handphone    String
   harga_pembelian   Float
   sales             String? // Menambahkan field sales
   tanggal_pembelian DateTime? // Menambahkan field tanggal_pembelian
