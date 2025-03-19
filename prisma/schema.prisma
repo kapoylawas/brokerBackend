@@ -87,7 +87,7 @@ model Penjualan {
   aksesoris_id Int?
   metode_bayar String
   grand_total  String
-  nomer_nota   String
+  nota         String
   created_at   DateTime   @default(now())
   user         User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
   Aksesoris    Aksesoris? @relation(fields: [aksesoris_id], references: [id], onDelete: Cascade)

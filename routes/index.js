@@ -11,6 +11,7 @@ const {
   validateSupplier,
   validateBarangMasuk,
   validateHandphone,
+  validateAksesoris,
 } = require("../utils/validators");
 const { handleValidationErrors, verifyToken } = require("../middlewares");
 
@@ -19,6 +20,7 @@ const loginController = require("../controllers/LoginController");
 const supplierController = require("../controllers/SupplierController");
 const barangMasukController = require("../controllers/BarangMasukController");
 const handPhoneController = require("../controllers/HandPhoneController");
+const aksesorisController = require("../controllers/AksesorisController");
 
 // Define routes
 const routes = [
@@ -82,6 +84,20 @@ const routes = [
     path: "/barang-masuk/:id",
     middlewares: [verifyToken, validateBarangMasuk, handleValidationErrors],
     handler: barangMasukController.updateBarangMasuk,
+  },
+
+  // Aksesoris route
+  {
+    method: "post",
+    path: "/aksesoris",
+    middlewares: [verifyToken, validateAksesoris, handleValidationErrors],
+    handler: aksesorisController.createAksesoris,
+  },
+  {
+    method: "get",
+    path: "/aksesoris",
+    middlewares: [verifyToken],
+    handler: aksesorisController.allAksesoris,
   },
 ];
 
