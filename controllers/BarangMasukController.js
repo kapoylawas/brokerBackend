@@ -102,6 +102,7 @@ const createBarangMasuk = async (req, res) => {
         supplier_id: parseInt(req.body.supplier_id),
         imei: req.body.imei,
         handphone_id: parseInt(req.body.handphone_id),
+        kode_negara: req.body.kode_negara,
         name_handphone: req.body.name_handphone,
         harga_pembelian: parseInt(req.body.harga_pembelian),
         sales: req.body.sales,

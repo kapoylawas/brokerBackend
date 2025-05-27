@@ -61,6 +61,7 @@ model Barang_masuk {
   id                Int       @id @default(autoincrement())
   supplier_id       Int
   imei              String    @unique
+  kode_negara       String
   handphone_id      Int
   name_handphone    String
   harga_pembelian   Float
