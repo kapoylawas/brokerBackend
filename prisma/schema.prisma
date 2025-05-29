@@ -62,6 +62,8 @@ model Barang_masuk {
   supplier_id       Int
   imei              String    @unique
   kode_negara       String
+  warna             String
+  kapasitas         String
   handphone_id      Int
   name_handphone    String
   harga_pembelian   Float
