@@ -12,6 +12,7 @@ const {
   validateBarangMasuk,
   validateHandphone,
   validateAksesoris,
+  validateTipeHandphone,
 } = require("../utils/validators");
 const { handleValidationErrors, verifyToken } = require("../middlewares");
 
@@ -20,6 +21,7 @@ const loginController = require("../controllers/LoginController");
 const supplierController = require("../controllers/SupplierController");
 const barangMasukController = require("../controllers/BarangMasukController");
 const handPhoneController = require("../controllers/HandPhoneController");
+const tipehandPhoneController = require("../controllers/TipeHandphoneController");
 const aksesorisController = require("../controllers/AksesorisController");
 
 // Define routes
@@ -58,6 +60,20 @@ const routes = [
     path: "/hand-phone",
     middlewares: [verifyToken, validateHandphone, handleValidationErrors],
     handler: handPhoneController.createPhone,
+  },
+
+  // Tipe handphone route
+  {
+    method: "post",
+    path: "/tipe-hand-phone",
+    middlewares: [verifyToken, validateTipeHandphone, handleValidationErrors],
+    handler: tipehandPhoneController.createTipePhone,
+  },
+  {
+    method: "get",
+    path: "/tipe-hand-phone",
+    middlewares: [verifyToken],
+    handler: tipehandPhoneController.allTipeHandPhone,
   },
 
   // Barang masuk route

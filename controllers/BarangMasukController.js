@@ -103,7 +103,9 @@ const createBarangMasuk = async (req, res) => {
         imei: req.body.imei,
         handphone_id: parseInt(req.body.handphone_id),
         kode_negara: req.body.kode_negara,
-        name_handphone: req.body.name_handphone,
+        warna: req.body.warna,
+        kapasitas: req.body.kapasitas,
+        namehandphone_id: parseInt(req.body.namehandphone_id),
         harga_pembelian: parseInt(req.body.harga_pembelian),
         sales: req.body.sales,
         tanggal_pembelian: req.body.tanggal_pembelian ? new Date(req.body.tanggal_pembelian) : null,
@@ -113,6 +115,7 @@ const createBarangMasuk = async (req, res) => {
       include: {
         supplier: true,
         handphone: true,
+        tipe_handphone: true,
       },
     });    
 

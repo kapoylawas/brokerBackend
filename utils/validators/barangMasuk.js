@@ -21,8 +21,10 @@ const validateBarangMasuk = [
         return true;
     }),
     body("kode_negara").notEmpty().withMessage("Kode negara tidak boleh kosong"),
+    body("warna").notEmpty().withMessage("Warna tidak boleh kosong"),
+    body("kapasitas").notEmpty().withMessage("Kapasitas tidak boleh kosong"),
     body("handphone_id").notEmpty().withMessage("Handphone tidak boleh kosong"),
-    body("name_handphone").notEmpty().withMessage("Nama handphone tidak boleh kosong"),
+    body("namehandphone_id").notEmpty().withMessage("Nama tipe handphone tidak boleh kosong"),
     body("harga_pembelian").notEmpty().withMessage("Harga pembelian tidak boleh kosong"),
     body("sales").notEmpty().withMessage("Sales tidak boleh kosong"),
     body("tanggal_pembelian").notEmpty().withMessage("Tanggal pembelian tidak boleh kosong"),

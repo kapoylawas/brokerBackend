@@ -4,6 +4,7 @@ const { validateSupplier } = require("./supplier");
 const { validateBarangMasuk } = require("./barangMasuk");
 const { validateHandphone } = require("./handphone");
 const { validateAksesoris } = require("./aksesoris");
+const { validateTipeHandphone } = require("./tipeHandphone");
 
 //export validator
 module.exports = {
@@ -11,5 +12,6 @@ module.exports = {
     validateSupplier,
     validateBarangMasuk,
     validateHandphone,
-    validateAksesoris
+    validateAksesoris,
+    validateTipeHandphone
 };

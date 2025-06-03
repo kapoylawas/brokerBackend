@@ -47,6 +47,16 @@ model Handphone {
   @@map("handphones")
 }
 
+model Tipe_handphone {
+  id           Int            @id @default(autoincrement())
+  name         String
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @updatedAt
+  barang_masuk Barang_masuk[]
+
+  @@map("tipe_handphones")
+}
+
 model Aksesoris {
   id         Int         @id @default(autoincrement())
   name       String
@@ -58,22 +68,25 @@ model Aksesoris {
 }
 
 model Barang_masuk {
-  id                Int       @id @default(autoincrement())
+  id                Int            @id @default(autoincrement())
   supplier_id       Int
-  imei              String    @unique
+  imei              String         @unique
   kode_negara       String
+  warna             String
+  kapasitas         String
   handphone_id      Int
-  name_handphone    String
+  namehandphone_id  Int
   harga_pembelian   Float
   sales             String? // Menambahkan field sales
   tanggal_pembelian DateTime? // Menambahkan field tanggal_pembelian
   jenis_pembelian   String? // Menambahkan field jenis_pembelian
   catatan_awal      String
   catatan_selesai   String?
-  created_at        DateTime  @default(now())
-  updated_at        DateTime  @updatedAt
-  supplier          Supplier  @relation(fields: [supplier_id], references: [id], onDelete: Cascade)
-  handphone         Handphone @relation(fields: [handphone_id], references: [id], onDelete: Cascade)
+  created_at        DateTime       @default(now())
+  updated_at        DateTime       @updatedAt
+  supplier          Supplier       @relation(fields: [supplier_id], references: [id], onDelete: Cascade)
+  handphone         Handphone      @relation(fields: [handphone_id], references: [id], onDelete: Cascade)
+  tipe_handphone    Tipe_handphone @relation(fields: [namehandphone_id], references: [id], onDelete: Cascade)
 
   @@map("barang_masuks")
 }
