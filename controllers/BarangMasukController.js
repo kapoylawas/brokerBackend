@@ -6,24 +6,25 @@ const prisma = require("../prisma/client");
 
 const findBarangMasuk = async (req, res) => {
   try {
-    // Mengambil nilai halaman dan limit dari parameter query, dengan nilai default
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
-
-    // Ambil kata kunci pencarian dari parameter query
     const search = req.query.search || "";
 
     // mengambil semua barang masuk
     const barangMasuk = await prisma.barang_masuk.findMany({
       where: {
         imei: {
-          contains: search, //mencari no imei
+          imei: {
+            contains: search,
+            // mode: 'insensitive' dihapus karena tidak didukung
+          }
         },
       },
       select: {
         id: true,
-        imei: true,
+        imei_id: true,
+        namehandphone_id: true,
         harga_pembelian: true,
         sales: true,
         tanggal_pembelian: true,
@@ -44,6 +45,16 @@ const findBarangMasuk = async (req, res) => {
             name: true,
           },
         },
+        imei: {
+          select: {
+            imei: true,
+          },
+        },
+        tipe_handphone: {
+          select: {
+            name: true,
+          },
+        },
       },
       orderBy: {
         id: "desc",
@@ -56,24 +67,21 @@ const findBarangMasuk = async (req, res) => {
     const totalBarangMasuk = await prisma.barang_masuk.count({
       where: {
         imei: {
-          contains: search, // Menghitung jumlah total produk yang sesuai dengan kata kunci pencarian
+          imei: {
+            contains: search,
+          }
         },
       },
     });
 
-    // Menghitung total halaman
     const totalPages = Math.ceil(totalBarangMasuk / limit);
 
-    // Mengirim respons
     res.status(200).send({
-      //meta untuk respons JSON
       meta: {
         success: true,
         message: "Berhasil mengambil semua produk barang masuk",
       },
-      //data produk barang masuk
       data: barangMasuk,
-      //paginasi
       pagination: {
         currentPage: page,
         totalPages: totalPages,
@@ -82,15 +90,12 @@ const findBarangMasuk = async (req, res) => {
       },
     });
   } catch (error) {
-    // Mengirim respons jika terjadi kesalahan
     res.status(500).send({
-      //meta untuk respons JSON
       meta: {
         success: false,
         message: "Kesalahan internal server",
       },
-      //data kesalahan
-      errors: error,
+      errors: error.message,
     });
   }
 };
@@ -108,7 +113,9 @@ const createBarangMasuk = async (req, res) => {
         namehandphone_id: parseInt(req.body.namehandphone_id),
         harga_pembelian: parseInt(req.body.harga_pembelian),
         sales: req.body.sales,
-        tanggal_pembelian: req.body.tanggal_pembelian ? new Date(req.body.tanggal_pembelian) : null,
+        tanggal_pembelian: req.body.tanggal_pembelian
+          ? new Date(req.body.tanggal_pembelian)
+          : null,
         jenis_pembelian: req.body.jenis_pembelian,
         catatan_awal: req.body.catatan_awal,
       },
@@ -118,7 +125,7 @@ const createBarangMasuk = async (req, res) => {
         tipe_handphone: true,
         imei: true,
       },
-    });    
+    });
 
     // mengirimkan respons
     res.status(201).send({
@@ -271,5 +278,5 @@ module.exports = {
   createBarangMasuk,
   findBarangMasuk,
   findBarangMasukById,
-  updateBarangMasuk
+  updateBarangMasuk,
 };
