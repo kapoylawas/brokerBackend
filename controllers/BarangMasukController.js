@@ -100,7 +100,7 @@ const createBarangMasuk = async (req, res) => {
     const barangMasuk = await prisma.barang_masuk.create({
       data: {
         supplier_id: parseInt(req.body.supplier_id),
-        imei: req.body.imei,
+        imei_id: parseInt(req.body.imei_id),
         handphone_id: parseInt(req.body.handphone_id),
         kode_negara: req.body.kode_negara,
         warna: req.body.warna,
@@ -116,6 +116,7 @@ const createBarangMasuk = async (req, res) => {
         supplier: true,
         handphone: true,
         tipe_handphone: true,
+        imei: true,
       },
     });    
 
