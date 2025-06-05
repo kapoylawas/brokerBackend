@@ -67,6 +67,16 @@ model Imei {
   @@map("imeis")
 }
 
+model Kode_negara {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @updatedAt
+  barang_masuk Barang_masuk[]
+
+  @@map("kode_negaras")
+}
+
 model Aksesoris {
   id         Int         @id @default(autoincrement())
   name       String
@@ -81,7 +91,7 @@ model Barang_masuk {
   id                Int            @id @default(autoincrement())
   supplier_id       Int
   imei_id           Int
-  kode_negara       String
+  kodenegara_id     Int
   warna             String
   kapasitas         String
   handphone_id      Int
@@ -98,6 +108,7 @@ model Barang_masuk {
   handphone         Handphone      @relation(fields: [handphone_id], references: [id], onDelete: Cascade)
   tipe_handphone    Tipe_handphone @relation(fields: [namehandphone_id], references: [id], onDelete: Cascade)
   imei              Imei           @relation(fields: [imei_id], references: [id], onDelete: Cascade)
+  kode_negara       Kode_negara    @relation(fields: [kodenegara_id], references: [id], onDelete: Cascade)
 
   @@map("barang_masuks")
 }

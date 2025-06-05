@@ -7,13 +7,14 @@ const router = express.Router();
 
 // Import validators and middleware
 const {
-  validateLogin,
-  validateSupplier,
-  validateBarangMasuk,
-  validateHandphone,
-  validateAksesoris,
-  validateTipeHandphone,
-  validateImei,
+    validateLogin,
+    validateSupplier,
+    validateBarangMasuk,
+    validateHandphone,
+    validateAksesoris,
+    validateTipeHandphone,
+    validateImei,
+    validateKodeNegara,
 } = require("../utils/validators");
 const { handleValidationErrors, verifyToken } = require("../middlewares");
 
@@ -24,130 +25,145 @@ const barangMasukController = require("../controllers/BarangMasukController");
 const handPhoneController = require("../controllers/HandPhoneController");
 const tipehandPhoneController = require("../controllers/TipeHandphoneController");
 const imeiController = require("../controllers/ImeiController");
+const kodeNegaraController = require("../controllers/KodeNegaraController");
 const aksesorisController = require("../controllers/AksesorisController");
 
 // Define routes
 const routes = [
-  // Login route
-  {
-    method: "post",
-    path: "/login",
-    middlewares: [validateLogin, handleValidationErrors],
-    handler: loginController.login,
-  },
+    // Login route
+    {
+        method: "post",
+        path: "/login",
+        middlewares: [validateLogin, handleValidationErrors],
+        handler: loginController.login,
+    },
 
-  // Supplier route
-  {
-    method: "post",
-    path: "/suppliers",
-    middlewares: [verifyToken, validateSupplier, handleValidationErrors],
-    handler: supplierController.createSupplier,
-  },
-  {
-    method: "get",
-    path: "/supplier-all",
-    middlewares: [verifyToken],
-    handler: supplierController.allSupplier,
-  },
+    // Supplier route
+    {
+        method: "post",
+        path: "/suppliers",
+        middlewares: [verifyToken, validateSupplier, handleValidationErrors],
+        handler: supplierController.createSupplier,
+    },
+    {
+        method: "get",
+        path: "/supplier-all",
+        middlewares: [verifyToken],
+        handler: supplierController.allSupplier,
+    },
 
-  // HandPhone route
-  {
-    method: "get",
-    path: "/hand-phone",
-    middlewares: [verifyToken],
-    handler: handPhoneController.allHandPhone,
-  },
-  {
-    method: "post",
-    path: "/hand-phone",
-    middlewares: [verifyToken, validateHandphone, handleValidationErrors],
-    handler: handPhoneController.createPhone,
-  },
+    // HandPhone route
+    {
+        method: "get",
+        path: "/hand-phone",
+        middlewares: [verifyToken],
+        handler: handPhoneController.allHandPhone,
+    },
+    {
+        method: "post",
+        path: "/hand-phone",
+        middlewares: [verifyToken, validateHandphone, handleValidationErrors],
+        handler: handPhoneController.createPhone,
+    },
 
-  // Tipe handphone route
-  {
-    method: "post",
-    path: "/tipe-hand-phone",
-    middlewares: [verifyToken, validateTipeHandphone, handleValidationErrors],
-    handler: tipehandPhoneController.createTipePhone,
-  },
-  {
-    method: "get",
-    path: "/tipe-hand-phone",
-    middlewares: [verifyToken],
-    handler: tipehandPhoneController.allTipeHandPhone,
-  },
+    // Tipe handphone route
+    {
+        method: "post",
+        path: "/tipe-hand-phone",
+        middlewares: [verifyToken, validateTipeHandphone, handleValidationErrors],
+        handler: tipehandPhoneController.createTipePhone,
+    },
+    {
+        method: "get",
+        path: "/tipe-hand-phone",
+        middlewares: [verifyToken],
+        handler: tipehandPhoneController.allTipeHandPhone,
+    },
 
-  // Imei route
-  {
-    method: "post",
-    path: "/imei",
-    middlewares: [verifyToken, validateImei, handleValidationErrors],
-    handler: imeiController.createImei,
-  },
-  {
-    method: "get",
-    path: "/imei",
-    middlewares: [verifyToken],
-    handler: imeiController.allImei,
-  },
+    // Imei route
+    {
+        method: "post",
+        path: "/imei",
+        middlewares: [verifyToken, validateImei, handleValidationErrors],
+        handler: imeiController.createImei,
+    },
+    {
+        method: "get",
+        path: "/imei",
+        middlewares: [verifyToken],
+        handler: imeiController.allImei,
+    },
 
-  // Barang masuk route
-  {
-    method: "post",
-    path: "/barang-masuk",
-    middlewares: [verifyToken, validateBarangMasuk, handleValidationErrors],
-    handler: barangMasukController.createBarangMasuk,
-  },
-  {
-    method: "get",
-    path: "/barang-masuk",
-    middlewares: [verifyToken],
-    handler: barangMasukController.findBarangMasuk,
-  },
-  {
-    method: "get",
-    path: "/barang-masuk/:id",
-    middlewares: [verifyToken],
-    handler: barangMasukController.findBarangMasukById,
-  },
-  {
-    method: "put",
-    path: "/barang-masuk/:id",
-    middlewares: [verifyToken, validateBarangMasuk, handleValidationErrors],
-    handler: barangMasukController.updateBarangMasuk,
-  },
+    // Kode neagara route
+    {
+        method: "post",
+        path: "/kode-negara",
+        middlewares: [verifyToken, validateKodeNegara, handleValidationErrors],
+        handler: kodeNegaraController.createKodeNegara,
+    },
+    {
+        method: "get",
+        path: "/kode-negara",
+        middlewares: [verifyToken],
+        handler: kodeNegaraController.allKodeNegara,
+    },
 
-  // Aksesoris route
-  {
-    method: "post",
-    path: "/aksesoris",
-    middlewares: [verifyToken, validateAksesoris, handleValidationErrors],
-    handler: aksesorisController.createAksesoris,
-  },
-  {
-    method: "get",
-    path: "/aksesoris",
-    middlewares: [verifyToken],
-    handler: aksesorisController.allAksesoris,
-  },
+    // Barang masuk route
+    {
+        method: "post",
+        path: "/barang-masuk",
+        middlewares: [verifyToken, validateBarangMasuk, handleValidationErrors],
+        handler: barangMasukController.createBarangMasuk,
+    },
+    {
+        method: "get",
+        path: "/barang-masuk",
+        middlewares: [verifyToken],
+        handler: barangMasukController.findBarangMasuk,
+    },
+    {
+        method: "get",
+        path: "/barang-masuk/:id",
+        middlewares: [verifyToken],
+        handler: barangMasukController.findBarangMasukById,
+    },
+    {
+        method: "put",
+        path: "/barang-masuk/:id",
+        middlewares: [verifyToken, validateBarangMasuk, handleValidationErrors],
+        handler: barangMasukController.updateBarangMasuk,
+    },
+
+    // Aksesoris route
+    {
+        method: "post",
+        path: "/aksesoris",
+        middlewares: [verifyToken, validateAksesoris, handleValidationErrors],
+        handler: aksesorisController.createAksesoris,
+    },
+    {
+        method: "get",
+        path: "/aksesoris",
+        middlewares: [verifyToken],
+        handler: aksesorisController.allAksesoris,
+    },
 ];
 
 // Helper function to create routes
 const createRoutes = (routes) => {
-  routes.forEach(({ method, path, middlewares, handler }) => {
-    router[method](
-      path,
-      ...middlewares,
-      (req, res, next) => {
-        // Menambahkan waktu Indonesia ke dalam objek respons
-        const currentTime = moment().tz("Asia/Jakarta").format(); // Mengambil waktu saat ini dalam WIB
-        res.locals.currentTime = currentTime; // Menyimpan waktu dalam res.locals
-        next(); // Melanjutkan ke handler berikutnya
-      },
-      handler
-    );
-  });
+    routes.forEach(({ method, path, middlewares, handler }) => {
+        router[method](
+            path,
+            ...middlewares,
+            (req, res, next) => {
+                // Menambahkan waktu Indonesia ke dalam objek respons
+                const currentTime = moment().tz("Asia/Jakarta").format(); // Mengambil waktu saat ini dalam WIB
+                res.locals.currentTime = currentTime; // Menyimpan waktu dalam res.locals
+                next(); // Melanjutkan ke handler berikutnya
+            },
+            handler
+        );
+    });
 };
 
 // Create routes
