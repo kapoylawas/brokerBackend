@@ -61,6 +61,16 @@ const findBarangMasuk = async(req, res) => {
                         name: true,
                     },
                 },
+                warna: {
+                    select: {
+                        name: true,
+                    },
+                },
+                kapasitas: {
+                    select: {
+                        name: true,
+                    },
+                },
             },
             orderBy: {
                 id: "desc",
@@ -114,8 +124,8 @@ const createBarangMasuk = async(req, res) => {
                 imei_id: parseInt(req.body.imei_id),
                 handphone_id: parseInt(req.body.handphone_id),
                 kodenegara_id: parseInt(req.body.kodenegara_id),
-                warna: req.body.warna,
-                kapasitas: req.body.kapasitas,
+                warna_id: parseInt(req.body.warna_id),
+                kapasitas_id: parseInt(req.body.kapasitas_id),
                 namehandphone_id: parseInt(req.body.namehandphone_id),
                 harga_pembelian: parseInt(req.body.harga_pembelian),
                 sales: req.body.sales,
@@ -129,7 +139,9 @@ const createBarangMasuk = async(req, res) => {
                 handphone: true,
                 tipe_handphone: true,
                 imei: true,
-                kode_negara: true
+                kode_negara: true,
+                warna: true,
+                kapasitas: true,
             },
         });
 

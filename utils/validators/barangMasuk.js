@@ -8,8 +8,8 @@ const validateBarangMasuk = [
     body("supplier_id").notEmpty().withMessage("Supplier tidak boleh kosong"),
     body("imei_id").notEmpty().withMessage("Imei tidak boleh kosong"),
     body("kodenegara_id").notEmpty().withMessage("Kode negara tidak boleh kosong"),
-    body("warna").notEmpty().withMessage("Warna tidak boleh kosong"),
-    body("kapasitas").notEmpty().withMessage("Kapasitas tidak boleh kosong"),
+    body("warna_id").notEmpty().withMessage("Warna tidak boleh kosong"),
+    body("kapasitas_id").notEmpty().withMessage("Kapasitas tidak boleh kosong"),
     body("handphone_id").notEmpty().withMessage("Handphone tidak boleh kosong"),
     body("namehandphone_id")
     .notEmpty()
