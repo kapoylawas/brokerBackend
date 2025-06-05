@@ -16,6 +16,7 @@ const {
     validateImei,
     validateKodeNegara,
     validateWarna,
+    validateKapasitas,
 } = require("../utils/validators");
 const { handleValidationErrors, verifyToken } = require("../middlewares");
 
@@ -28,6 +29,7 @@ const tipehandPhoneController = require("../controllers/TipeHandphoneController"
 const imeiController = require("../controllers/ImeiController");
 const kodeNegaraController = require("../controllers/KodeNegaraController");
 const warnaController = require("../controllers/WarnaController");
+const kapasitasController = require("../controllers/KapasitasController");
 const aksesorisController = require("../controllers/AksesorisController");
 
 // Define routes
@@ -122,6 +124,20 @@ const routes = [
         path: "/warna",
         middlewares: [verifyToken],
         handler: warnaController.allWarna,
+    },
+
+    // Kapasitas route
+    {
+        method: "post",
+        path: "/kapasitas",
+        middlewares: [verifyToken, validateKapasitas, handleValidationErrors],
+        handler: kapasitasController.createKapasitas,
+    },
+    {
+        method: "get",
+        path: "/kapasitas",
+        middlewares: [verifyToken],
+        handler: kapasitasController.allKapasitas,
     },
 
     // Barang masuk route

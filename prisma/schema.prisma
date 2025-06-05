@@ -87,6 +87,16 @@ model Warna {
   @@map("warnas")
 }
 
+model Kapasitas {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @updatedAt
+  barang_masuk Barang_masuk[]
+
+  @@map("kapasitas")
+}
+
 model Aksesoris {
   id         Int         @id @default(autoincrement())
   name       String
@@ -103,7 +113,7 @@ model Barang_masuk {
   imei_id           Int
   kodenegara_id     Int
   warna_id          Int
-  kapasitas         String
+  kapasitas_id      Int
   handphone_id      Int
   namehandphone_id  Int
   harga_pembelian   Float
@@ -120,6 +130,7 @@ model Barang_masuk {
   imei              Imei           @relation(fields: [imei_id], references: [id], onDelete: Cascade)
   kode_negara       Kode_negara    @relation(fields: [kodenegara_id], references: [id], onDelete: Cascade)
   warna             Warna          @relation(fields: [warna_id], references: [id], onDelete: Cascade)
+  kapasitas         Kapasitas      @relation(fields: [kapasitas_id], references: [id], onDelete: Cascade)
 
   @@map("barang_masuks")
 }
