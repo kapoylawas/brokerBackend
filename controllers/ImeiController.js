@@ -5,43 +5,49 @@ const prisma = require("../prisma/client");
 
 const createImei = async (req, res) => {
   try {
-    // Mencari id terakhir yang ada di database
-    const lastImei = await prisma.imei.findFirst({
-      orderBy: {
-        id: "desc",
-      },
-    });
+    const imeiInput = req.body.imei;
 
-    // Menyisipkan data imei dengan kode yang telah dihasilkan
+    // Validasi bahwa input tidak kosong dan berupa string
+    if (!imeiInput || typeof imeiInput !== "string" || imeiInput.length < 8) {
+      return res.status(400).send({
+        meta: {
+          success: false,
+          message: "Input IMEI harus berupa string dengan minimal 8 karakter",
+        },
+      });
+    }
+
+    // Mengambil 8 karakter terakhir (bisa angka/huruf/simbol)
+    const barcode = imeiInput.slice(-8);
+
+    // Menyimpan data ke database
     const imeis = await prisma.imei.create({
       data: {
-        imei: req.body.imei,
+        imei: imeiInput,
+        barcode: barcode, // 8 karakter terakhir dari input
       },
     });
 
-    //mengirimkan response
+    // Mengirimkan response
     res.status(201).send({
       meta: {
         success: true,
-        message: "Imei berhasil ditambahkan",
+        message: "IMEI berhasil ditambahkan",
       },
       data: imeis,
     });
   } catch (error) {
-    // Jika terjadi kesalahan, kirim respons kesalahan internal server
     res.status(500).send({
-      // Meta untuk respons dalam format JSON
       meta: {
         success: false,
         message: "Terjadi kesalahan di server",
       },
-      // Data kesalahan
-      errors: error,
+      errors: error.message,
     });
   }
 };
 
-const allImei= async (req, res) => {
+const allImei = async (req, res) => {
   try {
     // Ambil kategori imei
     const imeis = await prisma.imei.findMany({
@@ -81,6 +87,6 @@ const allImei= async (req, res) => {
 };
 
 module.exports = {
-    createImei,
-    allImei
-}
+  createImei,
+  allImei,
+};

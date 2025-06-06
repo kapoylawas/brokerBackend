@@ -6,8 +6,6 @@ const validateImei = [
   body("imei")
     .notEmpty()
     .withMessage("Imei tidak boleh kosong")
-    .isLength({ min: 6, max: 8 })
-    .withMessage("Imei harus 6-8 karakter")
     .custom(async (imei, { req }) => {
       const existingImei = await prisma.imei.findFirst({
         where: { imei: imei },
