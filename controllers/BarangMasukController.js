@@ -15,7 +15,7 @@ const findBarangMasuk = async(req, res) => {
         const barangMasuk = await prisma.barang_masuk.findMany({
             where: {
                 imei: {
-                    imei: {
+                    barcode: {
                         contains: search,
                         // mode: 'insensitive' dihapus karena tidak didukung
                     }
@@ -49,6 +49,7 @@ const findBarangMasuk = async(req, res) => {
                 imei: {
                     select: {
                         imei: true,
+                        barcode: true
                     },
                 },
                 tipe_handphone: {
