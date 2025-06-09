@@ -17,10 +17,7 @@ const validateBarangMasuk = [
     body("harga_pembelian")
     .notEmpty()
     .withMessage("Harga pembelian tidak boleh kosong"),
-    body("sales").notEmpty().withMessage("Sales tidak boleh kosong"),
-    body("tanggal_pembelian")
-    .notEmpty()
-    .withMessage("Tanggal pembelian tidak boleh kosong"),
+    body("unit").notEmpty().withMessage("Unit tidak boleh kosong"),
     body("jenis_pembelian")
     .notEmpty()
     .withMessage("Jenis pembelian tidak boleh kosong"),

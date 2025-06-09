@@ -118,7 +118,8 @@ model Barang_masuk {
   handphone_id      Int
   namehandphone_id  Int
   harga_pembelian   Float
-  sales             String? // Menambahkan field sales
+  quality_control   String?
+  unit              String?
   tanggal_pembelian DateTime? // Menambahkan field tanggal_pembelian
   jenis_pembelian   String? // Menambahkan field jenis_pembelian
   catatan_awal      String
