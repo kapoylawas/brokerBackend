@@ -132,9 +132,8 @@ const createBarangMasuk = async (req, res) => {
         harga_pembelian: parseInt(req.body.harga_pembelian),
         quality_control: req.body.quality_control,
         unit: req.body.unit,
-        tanggal_pembelian: req.body.tanggal_pembelian
-          ? new Date(req.body.tanggal_pembelian)
-          : new Date(),
+        tanggal_pembelian: req.body.tanggal_pembelian ?
+          new Date(req.body.tanggal_pembelian) : new Date(),
         jenis_pembelian: req.body.jenis_pembelian,
         catatan_awal: req.body.catatan_awal,
       },
@@ -148,6 +147,9 @@ const createBarangMasuk = async (req, res) => {
         kapasitas: true,
       },
     });
+
+    console.log(barangMasuk);
+
 
     // mengirimkan respons
     res.status(201).send({
