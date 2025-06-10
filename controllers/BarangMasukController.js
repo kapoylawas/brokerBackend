@@ -148,9 +148,6 @@ const createBarangMasuk = async (req, res) => {
       },
     });
 
-    console.log(barangMasuk);
-
-
     // mengirimkan respons
     res.status(201).send({
       // meta untuk response json
