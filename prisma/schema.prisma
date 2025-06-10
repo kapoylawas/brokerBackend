@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -111,29 +105,36 @@ model Aksesoris {
 model Barang_masuk {
   id                Int            @id @default(autoincrement())
   supplier_id       Int
-  imei_id           Int
-  kodenegara_id     Int
-  warna_id          Int
-  kapasitas_id      Int
   handphone_id      Int
-  namehandphone_id  Int
   harga_pembelian   Float
-  quality_control   String?
-  unit              String?
-  tanggal_pembelian DateTime? // Menambahkan field tanggal_pembelian
-  jenis_pembelian   String? // Menambahkan field jenis_pembelian
   catatan_awal      String
   catatan_selesai   String?
   created_at        DateTime       @default(now())
   updated_at        DateTime       @updatedAt
-  supplier          Supplier       @relation(fields: [supplier_id], references: [id], onDelete: Cascade)
+  jenis_pembelian   String?
+  tanggal_pembelian DateTime?
+  namehandphone_id  Int
+  imei_id           Int
+  kapasitas_id      Int
+  kodenegara_id     Int
+  warna_id          Int
+  quality_control   String?
+  unit              String?
   handphone         Handphone      @relation(fields: [handphone_id], references: [id], onDelete: Cascade)
-  tipe_handphone    Tipe_handphone @relation(fields: [namehandphone_id], references: [id], onDelete: Cascade)
   imei              Imei           @relation(fields: [imei_id], references: [id], onDelete: Cascade)
-  kode_negara       Kode_negara    @relation(fields: [kodenegara_id], references: [id], onDelete: Cascade)
-  warna             Warna          @relation(fields: [warna_id], references: [id], onDelete: Cascade)
   kapasitas         Kapasitas      @relation(fields: [kapasitas_id], references: [id], onDelete: Cascade)
+  kode_negara       Kode_negara    @relation(fields: [kodenegara_id], references: [id], onDelete: Cascade)
+  tipe_handphone    Tipe_handphone @relation(fields: [namehandphone_id], references: [id], onDelete: Cascade)
+  supplier          Supplier       @relation(fields: [supplier_id], references: [id], onDelete: Cascade)
+  warna             Warna          @relation(fields: [warna_id], references: [id], onDelete: Cascade)
 
+  @@index([handphone_id], map: "barang_masuks_handphone_id_fkey")
+  @@index([imei_id], map: "barang_masuks_imei_id_fkey")
+  @@index([kapasitas_id], map: "barang_masuks_kapasitas_id_fkey")
+  @@index([kodenegara_id], map: "barang_masuks_kodenegara_id_fkey")
+  @@index([namehandphone_id], map: "barang_masuks_namehandphone_id_fkey")
+  @@index([supplier_id], map: "barang_masuks_supplier_id_fkey")
+  @@index([warna_id], map: "barang_masuks_warna_id_fkey")
   @@map("barang_masuks")
 }
 
@@ -149,8 +150,10 @@ model Penjualan {
   grand_total  String
   nota         String
   created_at   DateTime   @default(now())
-  user         User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
   Aksesoris    Aksesoris? @relation(fields: [aksesoris_id], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
+  @@index([aksesoris_id], map: "penjualans_aksesoris_id_fkey")
+  @@index([user_id], map: "penjualans_user_id_fkey")
   @@map("penjualans")
 }
