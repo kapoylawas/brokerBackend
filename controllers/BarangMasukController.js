@@ -123,8 +123,8 @@ const createBarangMasuk = async (req, res) => {
     const barangMasuk = await prisma.barang_masuk.create({
       data: {
         supplier_id: parseInt(req.body.supplier_id),
-        imei_id: parseInt(req.body.imei_id),
         handphone_id: parseInt(req.body.handphone_id),
+        imei_id: parseInt(req.body.imei_id),
         kodenegara_id: parseInt(req.body.kodenegara_id),
         warna_id: parseInt(req.body.warna_id),
         kapasitas_id: parseInt(req.body.kapasitas_id),
@@ -190,15 +190,44 @@ const findBarangMasukById = async (req, res) => {
             no_hp: true,
           },
         },
-        imei: true,
         handphone: {
           select: {
             id: true,
             name: true,
           },
         },
+        imei: {
+          select: {
+            id: true,
+            imei: true,
+            barcode: true,
+          },
+        },
+        kapasitas: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        kode_negara: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        tipe_handphone: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        warna: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         harga_pembelian: true,
-        name_handphone: true,
         quality_control: true,
         unit: true,
         tanggal_pembelian: true,
@@ -249,14 +278,19 @@ const updateBarangMasuk = async (req, res) => {
   try {
     const dataBarangMasuk = {
       supplier_id: parseInt(req.body.supplier_id),
-      imei: req.body.imei,
       handphone_id: parseInt(req.body.handphone_id),
-      name_handphone: req.body.name_handphone,
+      imei_id: parseInt(req.body.imei_id),
+      kodenegara_id: parseInt(req.body.kodenegara_id),
+      warna_id: parseInt(req.body.warna_id),
+      kapasitas_id: parseInt(req.body.kapasitas_id),
+      namehandphone_id: parseInt(req.body.namehandphone_id),
       harga_pembelian: parseInt(req.body.harga_pembelian),
       quality_control: req.body.quality_control,
       unit: req.body.unit,
       tanggal_pembelian: new Date(req.body.tanggal_pembelian),
       jenis_pembelian: req.body.jenis_pembelian,
+      jenis_pembelian: req.body.jenis_pembelian,
+      catatan_awal: req.body.catatan_awal,
       catatan_selesai: req.body.catatan_selesai,
       updated_at: new Date(),
     };
@@ -270,6 +304,11 @@ const updateBarangMasuk = async (req, res) => {
       include: {
         supplier: true,
         handphone: true,
+        tipe_handphone: true,
+        imei: true,
+        kode_negara: true,
+        warna: true,
+        kapasitas: true,
       },
     });
 
